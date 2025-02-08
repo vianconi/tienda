@@ -5,11 +5,8 @@ services:
     image: mariadb:11.7.1-ubi9-rc  # docker pull mariadb:11.7.1-ubi9-rc
     container_name: mariadb_container
     restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # Definir la contraseña del root
-      MYSQL_DATABASE: ${MYSQL_DATABASE}  # Nombre de la base de datos
-      MYSQL_USER: ${MYSQL_USER}  # Usuario de la base de datos
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}  # Contraseña del usuario
+    env_file:
+      - .env.docker  # Cargar variables desde .env.docker
     ports:
       - "3306:3306"
     volumes:
@@ -18,7 +15,7 @@ services:
       - mariadb_network
 
   phpmyadmin:
-    image: phpmyadmin:latest
+    image: phpmyadmin:5.2.2
     container_name: phpmyadmin
     restart: unless-stopped
     environment:
@@ -39,4 +36,3 @@ volumes:
 networks:
   mariadb_network:
     driver: bridge
-

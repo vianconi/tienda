@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, url_for, redirect
+from flask_mysqldb import MySQL
 from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
 
 csrf = CSRFProtect()
+db = MySQL(app)
 
 @app.route('/')
 def index():
